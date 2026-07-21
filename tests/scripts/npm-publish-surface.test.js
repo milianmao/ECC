@@ -41,7 +41,6 @@ function buildExpectedPublishPaths(repoRoot) {
 
   const extraPaths = [
     "manifests",
-    "scripts/build-aster-plugin.js",
     "scripts/ecc.js",
     "scripts/catalog.js",
     "scripts/ci/scan-supply-chain-iocs.js",
@@ -58,8 +57,6 @@ function buildExpectedPublishPaths(repoRoot) {
     "scripts/install-plan.js",
     "scripts/list-installed.js",
     "scripts/loop-status.js",
-    "scripts/aster.js",
-    "scripts/aster-hooks",
     "scripts/observability-readiness.js",
     "scripts/plan-canvas.js",
     "scripts/operator-readiness-dashboard.js",
@@ -78,7 +75,6 @@ function buildExpectedPublishPaths(repoRoot) {
     "scripts/codex/merge-mcp-config.js",
     ".codex-plugin",
     "plugins/ecc",
-    "plugins/aster",
     ".mcp.json",
     "install.sh",
     "install.ps1",

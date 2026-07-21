@@ -7,7 +7,6 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { findNativeBash } = require('../../scripts/lib/native-bash');
 const TOML = require('@iarna/toml');
 
 const repoRoot = path.join(__dirname, '..', '..');
@@ -16,7 +15,6 @@ const pluginCacheCheckScript = path.join(repoRoot, 'scripts', 'codex', 'check-pl
 const mergeCodexConfigScript = path.join(repoRoot, 'scripts', 'codex', 'merge-codex-config.js');
 const mergeMcpConfigScript = path.join(repoRoot, 'scripts', 'codex', 'merge-mcp-config.js');
 const syncScript = path.join(repoRoot, 'scripts', 'sync-ecc-to-codex.sh');
-const bashBinary = findNativeBash();
 const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
 const packageVersion = packageJson.version;
 const deterministicPackageEnv = {
@@ -45,7 +43,7 @@ function cleanup(dirPath) {
 }
 
 function runBash(scriptPath, args = [], env = {}, cwd = repoRoot) {
-  return spawnSync(bashBinary, [scriptPath, ...args], {
+  return spawnSync('bash', [scriptPath, ...args], {
     cwd,
     env: {
       ...process.env,
@@ -633,10 +631,6 @@ else failed++;
 
 if (
   test('sync installs the missing Codex baseline and accepts the legacy context7 MCP section', () => {
-    if (!bashBinary) {
-      console.log('  - sync shell test skipped: no native Bash runtime available');
-      return;
-    }
     const homeDir = createTempDir('codex-sync-home-');
     const codexDir = path.join(homeDir, '.codex');
     const configPath = path.join(codexDir, 'config.toml');
@@ -715,10 +709,6 @@ else failed++;
 
 if (
   test('sync adds parent-table keys when the target only declares an implicit parent table', () => {
-    if (!bashBinary) {
-      console.log('  - sync shell test skipped: no native Bash runtime available');
-      return;
-    }
     const homeDir = createTempDir('codex-sync-implicit-parent-home-');
     const codexDir = path.join(homeDir, '.codex');
     const configPath = path.join(codexDir, 'config.toml');

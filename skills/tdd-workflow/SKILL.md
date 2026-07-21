@@ -89,11 +89,13 @@ ALWAYS write tests first, then implement code to make tests pass.
 
 Do not assume `npm test`. The commands in the steps and examples below use `<test>`, `<test-watch>`, and `<coverage>` as placeholders for the project's actual runner. Resolve them once before starting:
 
-1. **Detect the package manager without assuming a repository helper.** Inspect the
-   `package.json` `packageManager` field and lockfiles, then use the matching local
-   command (`npm`, `pnpm`, `yarn`, or `bun`). An ECC source checkout may provide
-   `scripts/setup-package-manager.js`, but an installed skill must not execute a
-   target project's same-named script merely because this workflow mentions it.
+1. **Run the package-manager detector** (ships with ECC):
+
+   ```bash
+   node scripts/setup-package-manager.js --detect
+   ```
+
+   It resolves the package manager (npm / pnpm / yarn / bun) from, in order: `CLAUDE_PACKAGE_MANAGER`, `.claude/package-manager.json`, the `package.json` `packageManager` field, the lockfile, then global config.
 
 2. **Distinguish the package manager from the test runner — they are not the same.** A project can use Bun to install dependencies yet still run Jest or Vitest. Inspect `package.json` `scripts.test` and the test files:
    - `scripts.test` invokes `jest` / `vitest` -> run through the detected PM (`npm test`, `pnpm test`, `yarn test`, or `bun run test`).

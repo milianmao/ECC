@@ -1,4 +1,0 @@
-interface:
-  display_name: "Harness Start"
-  short_description: "Restore context and prepare the next development workflow"
-  default_prompt: "Use $harness-start to inspect this project and prepare the next workflow."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Harness Debug"
-  short_description: "Reproduce failures, fix root causes, and prevent regressions"
-  default_prompt: "Use $harness-debug to reproduce this failure and implement a verified root-cause fix."

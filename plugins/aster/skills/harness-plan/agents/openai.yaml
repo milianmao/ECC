@@ -1,4 +1,0 @@
-interface:
-  display_name: "Harness Plan"
-  short_description: "Ground requirements and produce a decision-complete plan"
-  default_prompt: "Use $harness-plan to create a grounded, decision-complete implementation plan."

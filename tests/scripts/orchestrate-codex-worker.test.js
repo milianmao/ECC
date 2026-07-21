@@ -5,10 +5,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { findNativeBash } = require('../../scripts/lib/native-bash');
 
 const SCRIPT = path.join(__dirname, '..', '..', 'scripts', 'orchestrate-codex-worker.sh');
-const bashBinary = findNativeBash();
 
 console.log('=== Testing orchestrate-codex-worker.sh ===\n');
 
@@ -27,10 +25,6 @@ function test(desc, fn) {
 }
 
 test('fails fast for an unreadable task file and records failure artifacts', () => {
-  if (!bashBinary) {
-    console.log('    SKIP: no native Bash runtime available');
-    return;
-  }
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'ecc-orch-worker-'));
   const handoffFile = path.join(tempRoot, '.orchestration', 'docs', 'handoff.md');
   const statusFile = path.join(tempRoot, '.orchestration', 'docs', 'status.md');
@@ -39,7 +33,7 @@ test('fails fast for an unreadable task file and records failure artifacts', () 
   try {
     spawnSync('git', ['init'], { cwd: tempRoot, stdio: 'ignore' });
 
-    const result = spawnSync(bashBinary, [SCRIPT, missingTaskFile, handoffFile, statusFile], {
+    const result = spawnSync('bash', [SCRIPT, missingTaskFile, handoffFile, statusFile], {
       cwd: tempRoot,
       encoding: 'utf8'
     });

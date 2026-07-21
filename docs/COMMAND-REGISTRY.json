@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 103,
+  "totalCommands": 94,
   "commands": [
     {
       "command": "aside",
@@ -331,87 +331,6 @@
       "allAgents": [],
       "skills": [],
       "path": "commands/harness-audit.md"
-    },
-    {
-      "command": "harness-debug",
-      "description": "Reproduce a failure and implement a regression-tested root-cause fix.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-debug.md"
-    },
-    {
-      "command": "harness-finish",
-      "description": "Verify, clean up, and prepare the current task handoff.",
-      "type": "refactoring",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-finish.md"
-    },
-    {
-      "command": "harness-implement",
-      "description": "Execute an approved plan with focused tests and checks.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-implement.md"
-    },
-    {
-      "command": "harness-parallel",
-      "description": "Coordinate independent agent work with strict ownership boundaries.",
-      "type": "planning",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-parallel.md"
-    },
-    {
-      "command": "harness-plan",
-      "description": "Create a grounded, decision-complete implementation plan.",
-      "type": "planning",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-plan.md"
-    },
-    {
-      "command": "harness-release",
-      "description": "Validate a release candidate without publishing it.",
-      "type": "general",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-release.md"
-    },
-    {
-      "command": "harness-review",
-      "description": "Review changes for defects, security issues, and test gaps.",
-      "type": "testing",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-review.md"
-    },
-    {
-      "command": "harness-start",
-      "description": "Restore project context and select the next harness workflow.",
-      "type": "general",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-start.md"
-    },
-    {
-      "command": "harness-verify",
-      "description": "Run relevant project checks and report exact evidence.",
-      "type": "general",
-      "primaryAgents": [],
-      "allAgents": [],
-      "skills": [],
-      "path": "commands/harness-verify.md"
     },
     {
       "command": "hookify-configure",
@@ -1110,12 +1029,12 @@
   "statistics": {
     "byType": {
       "build": 2,
-      "general": 13,
+      "general": 10,
       "orchestration": 11,
-      "planning": 4,
-      "refactoring": 2,
+      "planning": 2,
+      "refactoring": 1,
       "review": 15,
-      "testing": 56
+      "testing": 53
     },
     "topAgents": [
       {

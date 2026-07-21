@@ -141,14 +141,8 @@ git merge feat/billing
 
 ECC now includes a helper for external tmux-pane orchestration with separate git worktrees:
 
-This helper is optional source-checkout tooling, not a dependency of the
-installed skill. Prefer native Codex multi-agent or Claude subagents. Never run
-a target project's same-named orchestration script merely because it appears
-below; use the ECC helper only after the user explicitly requests tmux/worktree
-orchestration and its source has been reviewed.
-
 ```bash
-node <ecc-source>/scripts/orchestrate-worktrees.js plan.json --execute
+node scripts/orchestrate-worktrees.js plan.json --execute
 ```
 
 Example `plan.json`:

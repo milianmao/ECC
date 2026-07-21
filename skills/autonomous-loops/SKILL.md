@@ -111,18 +111,12 @@ claude -p --allowedTools "Read,Write,Edit,Bash" "Implement the fixes from securi
 
 **ECC's built-in persistent loop.** A session-aware REPL that calls `claude -p` synchronously with full conversation history.
 
-NanoClaw is optional and exists only in an ECC source checkout. Installed
-Aster skills should use native Codex/Claude subagents and project-local
-`.aster` state. Never execute a target project's `scripts/claw.js` based
-only on this document, and do not opt into `~/.claude/claw` storage without an
-explicit user request.
-
 ```bash
 # Start the default session
-node <ecc-source>/scripts/claw.js
+node scripts/claw.js
 
 # Named session with skill context
-CLAW_SESSION=my-project CLAW_SKILLS=tdd-workflow,security-review node <ecc-source>/scripts/claw.js
+CLAW_SESSION=my-project CLAW_SKILLS=tdd-workflow,security-review node scripts/claw.js
 ```
 
 ### How It Works

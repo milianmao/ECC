@@ -11,7 +11,7 @@
     {
       "name": "ecc",
       "source": "./",
-      "description": "Harness-native ECC operator layer - 67 agents, 287 skills, 103 legacy command shims, reusable hooks, rules, selective install profiles, and production-ready workflows for Claude Code, Codex, OpenCode, Cursor, and related agent harnesses",
+      "description": "Harness-native ECC operator layer - 67 agents, 278 skills, 94 legacy command shims, reusable hooks, rules, selective install profiles, and production-ready workflows for Claude Code, Codex, OpenCode, Cursor, and related agent harnesses",
       "version": "2.0.0",
       "author": {
         "name": "Affaan Mustafa",
@@ -40,31 +40,6 @@
         "code-review",
         "security",
         "best-practices"
-      ],
-      "strict": false
-    },
-    {
-      "name": "aster",
-      "source": "./plugins/aster",
-      "description": "Personal development workflows, review agents, approval-gated memory, and balanced hooks for Claude Code and Codex",
-      "version": "0.1.0",
-      "author": {
-        "name": "milianmao"
-      },
-      "license": "MIT",
-      "keywords": [
-        "agents",
-        "skills",
-        "hooks",
-        "workflows",
-        "code-review"
-      ],
-      "category": "workflow",
-      "tags": [
-        "agents",
-        "skills",
-        "hooks",
-        "workflows"
       ],
       "strict": false
     }

@@ -11,15 +11,6 @@ version: 2.1.0
 
 An advanced learning system that turns your Claude Code sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
 
-## Aster Policy
-
-When this skill is installed by Aster, its lifecycle runner is the source
-of truth: observations remain project-scoped under `.aster/memory`, become
-pending candidates, and are never injected until `aster memory approve`
-records human approval. Do not start the legacy background observer, promote
-instincts globally, or write XDG/`~/.claude` state unless the user explicitly
-opts into the standalone ECC learning system described below.
-
 **v2.1** adds **project-scoped instincts** — React patterns stay in your React project, Python conventions stay in your Python project, and universal patterns (like "always validate input") are shared globally.
 
 ## When to Activate
