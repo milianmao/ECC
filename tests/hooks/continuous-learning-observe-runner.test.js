@@ -156,6 +156,10 @@ function runTests() {
   })) passed++; else failed++;
 
   if (test('observe-runner invokes observe.sh with phase, stdin, and plugin root', () => {
+    if (!observeRunner.findShellBinary()) {
+      console.log('    SKIP: no native Bash runtime available');
+      return;
+    }
     withTempPluginRoot(tempRoot => {
       writeFakeObserveScript(tempRoot);
       const env = fs.existsSync('/bin/sh') ? { BASH: '/bin/sh' } : {};

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Harness Verify"
+  short_description: "Run relevant checks and report evidence-backed results"
+  default_prompt: "Use $harness-verify to run the relevant project checks and report evidence."

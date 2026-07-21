@@ -75,6 +75,15 @@ skills:
   - git-workflow
   - golang-patterns
   - golang-testing
+  - harness-debug
+  - harness-finish
+  - harness-implement
+  - harness-parallel
+  - harness-plan
+  - harness-release
+  - harness-review
+  - harness-start
+  - harness-verify
   - healthcare-cdss-patterns
   - healthcare-emr-patterns
   - healthcare-eval-harness
@@ -187,6 +196,15 @@ commands:
   - go-test
   - gradle-build
   - harness-audit
+  - harness-debug
+  - harness-finish
+  - harness-implement
+  - harness-parallel
+  - harness-plan
+  - harness-release
+  - harness-review
+  - harness-start
+  - harness-verify
   - hookify
   - hookify-configure
   - hookify-help

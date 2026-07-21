@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { ensureAgentDataHomeEnv } = require('../lib/agent-data-home');
+const { findNativeBash } = require('../lib/native-bash');
 
 function readStdinRaw() {
   try {
@@ -92,6 +93,14 @@ function findShellBinary() {
   const shProbeArgs = ['-c', ':'];
 
   for (const candidate of candidates) {
+    if (!isPowerShellBin(candidate)) {
+      const bash = findNativeBash({ candidates: [candidate] });
+      if (bash) {
+        _cachedShell = bash;
+        return _cachedShell;
+      }
+      continue;
+    }
     const probe = spawnSync(candidate, isPowerShellBin(candidate) ? psProbeArgs : shProbeArgs, {
       stdio: 'ignore',
       windowsHide: true,
@@ -112,25 +121,8 @@ function findShellBinary() {
 
 function findBashBinary() {
   if (_cachedBash !== undefined) return _cachedBash;
-
-  const candidates = [];
-  if (process.env.BASH && process.env.BASH.trim() && !isPowerShellBin(process.env.BASH.trim())) {
-    candidates.push(process.env.BASH.trim());
-  }
-  candidates.push('bash.exe', 'bash');
-
-  for (const candidate of candidates) {
-    const probe = spawnSync(candidate, ['-c', ':'], { stdio: 'ignore', windowsHide: true, timeout: 30000 });
-    // Require a clean exit, not just a successful spawn: the Windows System32
-    // bash.exe WSL stub spawns fine but exits non-zero with no distro installed.
-    if (!probe.error && probe.status === 0) {
-      _cachedBash = candidate;
-      return _cachedBash;
-    }
-  }
-
-  _cachedBash = null;
-  return null;
+  _cachedBash = findNativeBash();
+  return _cachedBash;
 }
 
 function spawnNode(rootDir, relPath, raw, args) {

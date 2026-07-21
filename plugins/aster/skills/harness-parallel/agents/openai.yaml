@@ -1,0 +1,4 @@
+interface:
+  display_name: "Harness Parallel"
+  short_description: "Coordinate agents with strict independent ownership boundaries"
+  default_prompt: "Use $harness-parallel to split this task into independent, bounded agent assignments."

@@ -24,6 +24,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { findNativeBash } = require('../../scripts/lib/native-bash');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
 const observeShPath = path.join(
@@ -33,6 +34,7 @@ const observeShPath = path.join(
   'hooks',
   'observe.sh'
 );
+const bashBinary = findNativeBash();
 
 let passed = 0;
 let failed = 0;
@@ -77,7 +79,7 @@ function runObserve(entrypoint) {
       cwd: home
     });
 
-    return spawnSync('bash', ['-x', observeShPath, 'post'], {
+    return spawnSync(bashBinary, ['-x', observeShPath, 'post'], {
       input: hookInput,
       env: {
         ...process.env,
@@ -129,6 +131,11 @@ function assertDeniedStopsAtLayer1(entrypoint) {
 }
 
 console.log('\n=== observe.sh Layer 1 entrypoint allowlist (#2102) ===\n');
+
+if (!bashBinary) {
+  console.log('Skipping observe.sh allowlist tests: no native Bash runtime available on Windows.');
+  process.exit(0);
+}
 
 const ALLOWED = ['cli', 'sdk-ts', 'claude-desktop', 'claude-vscode'];
 const DENIED = ['unknown-host', 'claude-cody', 'mcp'];

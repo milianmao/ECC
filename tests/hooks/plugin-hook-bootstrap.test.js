@@ -12,6 +12,7 @@ const { spawnSync } = require('child_process');
 
 const SCRIPT = path.join(__dirname, '..', '..', 'scripts', 'hooks', 'plugin-hook-bootstrap.js');
 const { normalizePluginRootForPlatform } = require(SCRIPT);
+const { findNativeBash } = require('../../scripts/lib/native-bash');
 
 function createTempDir() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-hook-bootstrap-'));
@@ -113,6 +114,55 @@ function runTests() {
     );
   })) passed++; else failed++;
 
+  if (test('skips Windows WSL launchers and probes later Git Bash matches', () => {
+    const systemRoot = 'C:\\Windows';
+    const wslBash = 'C:\\Windows\\System32\\bash.exe';
+    const gitBash = 'C:\\Program Files\\Git\\bin\\bash.exe';
+    const calls = [];
+    const fakeSpawn = (command) => {
+      calls.push(command);
+      if (String(command).toLowerCase().endsWith('where.exe')) {
+        return { status: 0, stdout: `${wslBash}\r\n${gitBash}\r\n` };
+      }
+      return { status: command === gitBash ? 0 : 1 };
+    };
+
+    assert.strictEqual(findNativeBash({
+      platform: 'win32',
+      env: { SystemRoot: systemRoot },
+      candidates: ['bash.exe'],
+      spawnSync: fakeSpawn,
+      existsSync: () => true,
+    }), gitBash);
+    assert.ok(!calls.includes(wslBash), 'WSL launcher must not be probed');
+    assert.ok(calls.includes(gitBash), 'later Git Bash match must be probed');
+  })) passed++; else failed++;
+
+  if (test('continues to later command candidates after a WSL-only match', () => {
+    const systemRoot = 'C:\\Windows';
+    const wslBash = 'C:\\Windows\\System32\\bash.exe';
+    const gitBash = 'C:\\Program Files\\Git\\bin\\bash.exe';
+    const calls = [];
+    const fakeSpawn = (command, args = []) => {
+      calls.push([command, args]);
+      if (String(command).toLowerCase().endsWith('where.exe')) {
+        return args[0] === 'bash.exe'
+          ? { status: 0, stdout: `${wslBash}\r\n` }
+          : { status: 0, stdout: `${gitBash}\r\n` };
+      }
+      return { status: command === gitBash ? 0 : 1 };
+    };
+
+    assert.strictEqual(findNativeBash({
+      platform: 'win32',
+      env: { SystemRoot: systemRoot },
+      candidates: ['bash.exe', 'bash'],
+      spawnSync: fakeSpawn,
+      existsSync: () => true,
+    }), gitBash);
+    assert.ok(calls.some(([, args]) => args[0] === 'bash'), 'later command candidate must be resolved');
+  })) passed++; else failed++;
+
   if (test('node mode runs target script with plugin root environment', () => {
     const root = createTempDir();
     try {
@@ -204,6 +254,10 @@ process.exit(7);
   })) passed++; else failed++;
 
   if (test('shell mode runs target script through an available shell', () => {
+    if (process.platform === 'win32' && !findNativeBash()) {
+      console.log('    SKIP: no native Bash runtime available');
+      return;
+    }
     const root = createTempDir();
     try {
       writeFile(root, path.join('scripts', 'hook.sh'), [
@@ -331,9 +385,8 @@ process.exit(7);
 
     if (test('shell mode falls back to bash for .sh scripts when PowerShell is the resolved shell', () => {
       // Skip if no bash is available (headless CI without Git for Windows).
-      const bashProbe = spawnSync('bash.exe', ['-c', ':'], { stdio: 'ignore', timeout: 5000 });
-      if (bashProbe.error) {
-        console.log('    SKIP: bash.exe not found');
+      if (!findNativeBash()) {
+        console.log('    SKIP: no native Bash runtime available');
         return;
       }
 

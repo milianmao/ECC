@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { findNativeBash } = require('../lib/native-bash');
 
 const OBSERVE_RELATIVE_PATH = path.join('skills', 'continuous-learning-v2', 'hooks', 'observe.sh');
 const DEFAULT_TIMEOUT_MS = 9000;
@@ -45,31 +46,7 @@ function toShellPath(filePath) {
 }
 
 function findShellBinary() {
-  const candidates = [];
-  if (process.env.BASH && process.env.BASH.trim()) {
-    candidates.push(process.env.BASH.trim());
-  }
-
-  if (process.platform === 'win32') {
-    candidates.push('bash.exe', 'bash', 'sh');
-  } else {
-    candidates.push('bash', 'sh');
-  }
-
-  for (const candidate of candidates) {
-    const probe = spawnSync(candidate, ['-c', ':'], {
-      stdio: 'ignore',
-      windowsHide: true
-    });
-    // Require the probe to actually succeed, not just spawn: Windows'
-    // System32\bash.exe (WSL launcher) spawns even with no distro installed but
-    // exits non-zero, so `!probe.error` alone would treat it as a usable shell.
-    if (!probe.error && probe.status === 0) {
-      return candidate;
-    }
-  }
-
-  return null;
+  return findNativeBash();
 }
 
 function getPhaseFromHookId(hookId) {

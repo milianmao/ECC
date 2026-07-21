@@ -1,0 +1,28 @@
+{
+  "name": "aster",
+  "version": "0.1.0",
+  "description": "Personal development workflows, review agents, and balanced lifecycle hooks for Codex and Claude Code.",
+  "author": {
+    "name": "milianmao",
+    "url": "https://github.com/milianmao"
+  },
+  "license": "MIT",
+  "keywords": ["codex", "claude-code", "harness", "skills", "workflows", "hooks"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Aster",
+    "shortDescription": "Personal coding workflows with review, memory, and verification.",
+    "longDescription": "A focused personal development harness with reusable workflows, approval-gated project memory, balanced hooks, and development agents for Codex and Claude Code.",
+    "developerName": "milianmao",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "brandColor": "#E07856",
+    "composerIcon": "./assets/ecc-icon.svg",
+    "logo": "./assets/hero.png",
+    "defaultPrompt": [
+      "Use the harness-start workflow to begin this development task.",
+      "Use the harness-review workflow to review my current changes.",
+      "Use the harness-verify workflow to verify this repository."
+    ]
+  }
+}

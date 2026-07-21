@@ -1,0 +1,4 @@
+interface:
+  display_name: "Harness Finish"
+  short_description: "Clean up, verify, and prepare a concise task handoff"
+  default_prompt: "Use $harness-finish to close out the current task with final checks and a handoff."
